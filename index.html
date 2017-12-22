@@ -3,8 +3,55 @@
   <head>
     <meta charset="utf-8">
     <title>KidsClock</title>
+    <style>
+body {
+  font: 50vh 'Helvetica';
+  text-shadow: 0 8px 4px black;
+  margin: 0;
+}
+
+.time {
+  display: block;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.night {
+  background: linear-gradient(45deg, #9a6bf9, #bc058e);
+  color: #e3e88b;
+}
+
+.day {
+  background: linear-gradient(45deg, #e3e88b, #72bf2f);
+  color: #d37439;
+}
+    </style>
   </head>
   <body>
-    <h1>Test</h1>
+    <div id="container">
+      <div class="time">Loading</div>
+    </div>
+    <script>
+// Don't judge me, I threw this together in like 10 minutes, ok
+// Probably needs to be run through babel to run on my iPod Touch
+setInterval(function () {
+  var time = new Date();
+  var hours = time.getHours();
+  var minutes = time.getMinutes();
+
+  document.getElementsByClassName('time')[0].innerText = (hours > 12 ? hours - 12 : hours) + ':' + ((minutes < 10 ? '0' : '') + minutes);
+
+  var classList = document.getElementById('container').classList
+  classList.remove('day');
+  classList.remove('night');
+  classList.add(hours < 6 || hours > 20 ? 'night' : 'day');
+}, 1000);
+    </script>
   </body>
 </html>
